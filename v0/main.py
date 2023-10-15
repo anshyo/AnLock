@@ -6,7 +6,7 @@ from time import sleep
 from os import system
 from getpass import getpass
 import pathlib
-import paperclip
+import clipboard
 
 # here is teh class having all kinds of functions i used in this password managment
 
@@ -138,6 +138,7 @@ class PasswordManager:
             characters = string.ascii_letters + string.digits + string.punctuation
             password += str(random.choice(characters))
         self.add_password(service,password)
+        clipboard.copy(password)
         print("password is copied to your clipboard")
 
 
@@ -274,7 +275,6 @@ Contains at least one special character
 
         elif choice == '6':
             password = str(password_manager.generate_password())
-            print(f"Generated Password: {password}")
 
         elif choice == '7':
             password = input("Enter the password to check: ")
