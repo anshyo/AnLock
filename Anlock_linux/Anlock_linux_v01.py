@@ -7,6 +7,7 @@ from os import system
 from getpass import getpass
 import pathlib
 import clipboard
+from cryptography.fernet import Fernet
 
 # here is teh class having all kinds of functions i used in this password managment
 
@@ -170,6 +171,37 @@ class PasswordManager:
         except FileNotFoundError:
             open(self.file_name , "a").write(" ")
 
+class encrypt:
+    def __init__(self,file):
+        self.password = ""
+        self.filepath = file
+        self.filecontent = self.readE()
+        self.key = self.keygen()
+    def readE(self):
+        with open(self.filepath , "r") as f:
+            return(f.read())
+    def writeE(self):
+        with open(self.filepath , "w") as f:
+            f.write(self.filecontent)
+    def keygen(self):
+        a = Fernet.generate_key()
+        with open("idk.key" , "wb") as filekey:
+            filekey.write(a)
+        with open("idk.key" , "rb") as filekey:
+            return filekey.read()
+    def encryptE(self):
+        engine = Fernet(self.key)
+        a = engine.encrypt(self.filecontent)
+        self.filecontent = a
+        self.writeE()
+    def decryptE(self):
+        engine = Fernet(self.key)
+        a = engine.decrypt(self.filecontent)
+        self.filecontent = a
+        self.writeE()
+
+
+
 class paths:
     '''
     returns path of the file in with it is running or can just make a new folder
@@ -197,11 +229,11 @@ class paths:
         return self.currentFilePath + "\\" + name
 
 def main():
-    password_manager = PasswordManager("v0/pass.txt")
+    password_manager = PasswordManager("Anlock_linux/pass.txt")
     while True:
 
         if not password_manager.logged_in:
-            master_password = input("Enter your master password: ")
+            master_password = getpass(prompt="Enter your master password: ")
             password_manager.authenticate_user(master_password)
             if not password_manager.logged_in:
                 continue
@@ -221,7 +253,7 @@ def main():
 
         choice = input("Enter your choice: ")
 
-        system("cls")
+        system("clear")
 
         if choice == '1':
             print("""
