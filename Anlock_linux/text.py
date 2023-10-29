@@ -1,6 +1,4 @@
-from Anlock_linux_v01 import encrypt
-
-en = encrypt("Anlock_linux/text.txt")
-
-
-en.encryptE()
+from Anlock_linux_v01 import paths
+import pathlib
+print(paths().currentFilePath)
+print(pathlib.Path(__file__))

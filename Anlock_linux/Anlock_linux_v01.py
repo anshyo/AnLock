@@ -190,9 +190,8 @@ class encrypt:
         with open("idk.key" , "rb") as filekey:
             return filekey.read()
     def encryptE(self):
-        engine = Fernet(self.key)
-        a = engine.encrypt(self.filecontent)
-        self.filecontent = a
+        engine = Fernet(self.key).encrypt(self.filecontent)
+        self.filecontent = engine
         self.writeE()
     def decryptE(self):
         engine = Fernet(self.key)
@@ -209,14 +208,14 @@ class paths:
     def __init__(self) -> None:
         self.currentFilePath = self.path()
 
-    def path():
+    def path(self):
         '''returns the file in which this is running'''
         path = str(pathlib.Path(__file__))
         path = path[::-1]
         npath = ""
         j = 0
         for i in path:
-            if i == "\\" and j == 0:
+            if i == "/" and j == 0:
                 j += 1
             elif j == 1:
                 npath += i

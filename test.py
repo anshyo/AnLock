@@ -1,3 +1,6 @@
-dictt = {1:2,2:3} 
-dictt.pop(1)
-print(dictt)
+a = 10
+b = bin(a)
+x = bytes(b)
+from cryptography.fernet import Fernet
+c = Fernet.generate_key()
+d = Fernet(c).encrypt(x)
